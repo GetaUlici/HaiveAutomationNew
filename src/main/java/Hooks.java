@@ -56,7 +56,7 @@ public class Hooks {
     }
 
     public static String getDbOrganizationId() {
-        // Retrieve the third password from environment variables
+
         String dbOrgId2 = dotenv.get("DB_ORG_ID_2");
 
         if (dbOrgId2 == null) {
@@ -70,10 +70,7 @@ public class Hooks {
     // This method tears down the WebDriver instance and closes the browser.
     @AfterMethod
     public void tearDown() {
-        System.out.println("Tearing down...");
-
-        DatabaseUtils.deleteVenueByOrganisationId(getDbOrganizationId());
-
+//        DatabaseUtils.deleteVenueByOrganisationId(getDbOrganizationId());
 
         // Quitting the WebDriver session, which closes all browser windows and ends the WebDriver process.
         driver.quit();

@@ -12,7 +12,7 @@ public class DatabaseUtils {
     private static final Dotenv dotenv = Dotenv.load();
 
     public static String getDbUrl() {
-        // Retrieve the first password from environment variables
+
         String url = dotenv.get("DB_URL");
 
         if (url == null) {
@@ -23,7 +23,7 @@ public class DatabaseUtils {
     }
 
     public static String getDbUser() {
-        // Retrieve the second password from environment variables
+
         String user = dotenv.get("DB_USER");
 
         if (user == null) {
@@ -34,7 +34,7 @@ public class DatabaseUtils {
     }
 
     public static String getDbPassword() {
-        // Retrieve the third password from environment variables
+
         String password = dotenv.get("DB_PASSWORD");
 
         if (password == null) {
@@ -45,7 +45,7 @@ public class DatabaseUtils {
     }
 
     public static String getDbOrganizationId() {
-        // Retrieve the third password from environment variables
+
         String organisationID = dotenv.get("DB_ORG_ID");
 
         if (organisationID == null) {
@@ -54,14 +54,6 @@ public class DatabaseUtils {
 
         return organisationID;
     }
-
-//    public static void main2(String[] args) {
-//        // Example usage
-//        System.out.println("Password 1 from environment variable: " + getPassword1());
-//        System.out.println("Password 2 from environment variable: " + getPassword2());
-//        System.out.println("Password 3 from environment variable: " + getPassword3());
-//    }
-
 
     public static void deleteVenueByOrganisationId(String organisationId) {
         String query = "DELETE FROM venues WHERE organisationId = ?";
@@ -82,7 +74,6 @@ public class DatabaseUtils {
     }
 
     public static void main(String[] args) {
-//        deleteVenueByOrganisationId("org_2h8WpmLyEGoAJmefegjrgdep1cT");
         deleteVenueByOrganisationId(getDbOrganizationId());
     }
 }
