@@ -8,12 +8,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 // Importing WebDriver and ChromeDriver classes from the Selenium library.
 // WebDriver is used for interacting with the browser, and ChromeDriver is the specific implementation for Google Chrome.
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 // Importing TestNG annotations for setting up and tearing down test environments.
 // @BeforeMethod and @AfterMethod annotations define methods that are run before and after each test method.
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -26,12 +28,13 @@ public class Hooks {
     // This WebDriver instance will be used to control the browser during the tests.
     public WebDriver driver;
 
-    private static final Dotenv dotenv = Dotenv.load();
+    private static final Dotenv dotenv = Dotenv.load(); //
 
     // Method annotated with @BeforeMethod, indicating that it will run before each test method.
     // This method sets up the WebDriver and initializes the browser.
     @BeforeMethod
     public void setUp() {
+
 
         // Using WebDriverManager to automatically download and set up the ChromeDriver binary.
         WebDriverManager.chromedriver().setup();
@@ -45,6 +48,7 @@ public class Hooks {
         options.addArguments("--disable-search-engine-choice-screen");
 
         driver = new ChromeDriver(options);
+        Actions actions = new Actions(driver);
 
 
         // Maximizing the browser window to ensure that all elements are visible and accessible during the test.
@@ -53,9 +57,11 @@ public class Hooks {
         // Navigating to the specified URL in the browser. 
         // This is the starting point for the tests, loading the web application under test.
         driver.get("https://demo.wearehaive.com/ro/solutions/restaurants");
+        actions.keyDown(Keys.COMMAND).sendKeys("s").keyUp(Keys.COMMAND).perform();
     }
 
-    public static String getDbOrganizationId() {
+//
+    public static String getDbOrganizationId2() {
 
         String dbOrgId2 = dotenv.get("DB_ORG_ID_2");
 
@@ -70,7 +76,8 @@ public class Hooks {
     // This method tears down the WebDriver instance and closes the browser.
     @AfterMethod
     public void tearDown() {
-//        DatabaseUtils.deleteVenueByOrganisationId(getDbOrganizationId());
+//        DatabaseUtils.deleteVenueByOrganisationId(getDbOrganizationId2());
+
 
         // Quitting the WebDriver session, which closes all browser windows and ends the WebDriver process.
         driver.quit();

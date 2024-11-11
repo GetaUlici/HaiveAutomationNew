@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.Dotenv; //
 
 
 public class DatabaseUtils {
 
-    private static final Dotenv dotenv = Dotenv.load();
+    private static final Dotenv dotenv = Dotenv.load(); //
 
     public static String getDbUrl() {
 
@@ -60,7 +60,7 @@ public class DatabaseUtils {
 
         System.out.println("Deleting from db organization " + organisationId);
 
-        try (Connection connection = DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPassword());
+        try (Connection connection = DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPassword()); //
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, organisationId);
@@ -74,6 +74,6 @@ public class DatabaseUtils {
     }
 
     public static void main(String[] args) {
-        deleteVenueByOrganisationId(getDbOrganizationId());
+        deleteVenueByOrganisationId(getDbOrganizationId()); //
     }
 }

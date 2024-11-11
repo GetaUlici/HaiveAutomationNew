@@ -1,7 +1,5 @@
 import com.aventstack.extentreports.Status;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -114,11 +112,15 @@ public class LoginPage extends BasePage {
         return errorPassword;
     }
 
-    @FindBy(xpath = "//span[@data-sentry-element='Avatar']")
+    @FindBy(css = ".relative.flex.shrink-0.overflow-hidden.rounded-full.size-8")
     private WebElement avatarIcon;
 
     public void clickAvatarIcon() {
         avatarIcon.click();
+    }
+
+    public WebElement getAvatarIcon() {
+        return avatarIcon;
     }
 
     @FindBy(xpath = "//div[text()='Ieşi din cont']")
@@ -167,6 +169,20 @@ public class LoginPage extends BasePage {
         return datePicker;
     }
 
+    @FindBy(xpath = "//button[text()='Oct 01, 2024']")
+    private WebElement validationDay1;
+
+    public WebElement getValidationDay1() {
+        return validationDay1;
+    }
+
+    @FindBy(xpath = "//button[text()='Oct 03, 2024']")
+    private WebElement validationDay3;
+
+    public WebElement getValidationDay3() {
+        return validationDay3;
+    }
+
     @FindBy(linkText = "Nu aveți un cont? Înregistrați-vă aici")
     private WebElement authenticateIcon;
 
@@ -174,11 +190,19 @@ public class LoginPage extends BasePage {
         authenticateIcon.click();
     }
 
+    public WebElement getAuthenticateIcon() {
+        return authenticateIcon;
+    }
+
     @FindBy(name = "firstName")
     private WebElement nameField;
 
     public void setNameField(String name) {
         nameField.sendKeys(name);
+    }
+
+    public WebElement getNameField() {
+        return nameField;
     }
 
     @FindBy(name = "email")
@@ -213,7 +237,15 @@ public class LoginPage extends BasePage {
     private WebElement locatiiIcon;
 
     public void clickLocatiiIcon() {
-        locatiiIcon.click();
+        try {
+            // Wait until the element is clickable
+            wait.until(ExpectedConditions.elementToBeClickable(locatiiIcon));
+            locatiiIcon.click();
+        } catch (Exception e) {
+            // Fallback to JavaScript click if the regular click fails
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", locatiiIcon);
+        }
     }
 
     public WebElement getLocatiiIcon() {
@@ -267,7 +299,7 @@ public class LoginPage extends BasePage {
         codeLocatieField.sendKeys(post);
     }
 
-    @FindBy( xpath = "//button[contains(text(), 'Creați locația')]")
+    @FindBy(xpath = "//button[contains(text(), 'Creați locația')]")
     private WebElement creatiLocatiaButton;
 
     public void clickCreatiLocatiaButton() {
@@ -302,36 +334,45 @@ public class LoginPage extends BasePage {
     @FindBy(linkText = "Meniu")
     private WebElement meniuButton;
 
-   public void clickMeniuButton() {
-       meniuButton.click();
-   }
+    public void clickMeniuButton() {
 
-   public WebElement getMeniuButton() {
-       return meniuButton;
-   }
+        try {
+            // Wait until the element is clickable
+            wait.until(ExpectedConditions.elementToBeClickable(meniuButton));
+            meniuButton.click();
+        } catch (Exception e) {
+            // Fallback to JavaScript click if the regular click fails
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", meniuButton);
+        }
+    }
+
+    public WebElement getMeniuButton() {
+        return meniuButton;
+    }
 
 
-   @FindBy(xpath = "//button[text()='Creați meniu']")
-   private WebElement creatiMeniuButton;
+    @FindBy(xpath = "//button[text()='Creați meniu']")
+    private WebElement creatiMeniuButton;
 
-   public void clickCreatiMeniuButton() {
-       creatiMeniuButton.click();
-   }
+    public void clickCreatiMeniuButton() {
+        creatiMeniuButton.click();
+    }
 
-   public WebElement getCreatiMeniuButton() {
-       return creatiMeniuButton;
-   }
+    public WebElement getCreatiMeniuButton() {
+        return creatiMeniuButton;
+    }
 
-   @FindBy(name = "name")
-   private WebElement numeMeniu;
+    @FindBy(name = "name")
+    private WebElement numeMeniu;
 
-   public void setNumeMeniu(String name) {
-       numeMeniu.sendKeys(name);
-   }
+    public void setNumeMeniu(String name) {
+        numeMeniu.sendKeys(name);
+    }
 
-   public WebElement getNumeMeniu() {
-       return numeMeniu;
-   }
+    public WebElement getNumeMeniu() {
+        return numeMeniu;
+    }
 
     @FindBy(id = "description")
     private WebElement descriereMeniu;
@@ -379,6 +420,7 @@ public class LoginPage extends BasePage {
     public void clickAddCategorie() {
         addCategorieNouaButton.click();
     }
+
     public WebElement getAddCategorieNouaButton() {
         return addCategorieNouaButton;
     }
@@ -390,8 +432,8 @@ public class LoginPage extends BasePage {
         nameCat.sendKeys(name);
     }
 
-@FindBy(xpath = "//textarea[@placeholder='ex: Antreuri']")
-private WebElement descriptionCat;
+    @FindBy(xpath = "//textarea[@placeholder='ex: Antreuri']")
+    private WebElement descriptionCat;
 
     public void setDescriptionCat(String description) {
         descriptionCat.sendKeys(description);
@@ -401,14 +443,14 @@ private WebElement descriptionCat;
         return descriptionCat;
     }
 
-@FindBy(xpath = "//button[text()='Creați']")
-private WebElement creatiCatButton;
+    @FindBy(xpath = "//button[text()='Creați']")
+    private WebElement creatiCatButton;
 
     public void clickCreatiCatButton() {
         creatiCatButton.click();
     }
 
-//    xpath = "(//button[@data-sentry-component='DeleteCategoryButton']([1]"
+    //    xpath = "(//button[@data-sentry-component='DeleteCategoryButton']([1]"
     @FindBy(css = ".lucide.lucide-trash.size-4.text-destructive")
     private WebElement deleteCategory;
 
@@ -420,11 +462,18 @@ private WebElement creatiCatButton;
         return deleteCategory;
     }
 
-    @FindBy(xpath = "//h2[text()= 'Antreuri']")
+    @FindBy(xpath = "//h2[text()= 'Pizza']")
     private WebElement categoryConfirmation;
 
     public WebElement getCategoryConfirmation() {
         return categoryConfirmation;
+    }
+
+    @FindBy(xpath = "//div[text()='Category deleted successfully']")
+    private WebElement deletCatNotification;
+
+    public WebElement getDeletCatNotification() {
+        return deletCatNotification;
     }
 
     @FindBy(xpath = "(//button[@type='button'])[3]")
@@ -437,7 +486,8 @@ private WebElement creatiCatButton;
     public WebElement getEditCatIcon() {
         return editCatIcon;
     }
-//name = "name"
+
+    //name = "name"
     @FindBy(xpath = "//input[@name='name']")
     private WebElement editNameCat;
 
@@ -484,25 +534,33 @@ private WebElement creatiCatButton;
         return editCatConfirmation;
     }
 
-    @FindBy(linkText= "Produse")
+    @FindBy(linkText = "Produse")
     private WebElement produseIcon;
 
     public void clickProduseIcon() {
-        produseIcon.click();
+        try {
+            // Wait until the element is clickable
+            wait.until(ExpectedConditions.elementToBeClickable(produseIcon));
+            produseIcon.click();
+        } catch (Exception e) {
+            // Fallback to JavaScript click if the regular click fails
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", produseIcon);
+        }
     }
 
     public WebElement getProduseIcon() {
         return produseIcon;
     }
 
-    @FindBy(xpath = "//a[text()='Adaugă produs']")
+    @FindBy(linkText = "Adaugă produs")
     private WebElement adaugaProdusButton;
 
     public WebElement getAdaugaProdusButton() {
         return adaugaProdusButton;
     }
 
-    @FindBy (name = "name")
+    @FindBy(name = "name")
     private WebElement nameProduct;
 
     public void setNameProduct(String name) {
@@ -512,7 +570,8 @@ private WebElement creatiCatButton;
     public WebElement getNameProduct() {
         return nameProduct;
     }
-//    "(//button[@type='button' and @role='combobox' and @aria-invalid='false'])[1]"
+
+    //    "(//button[@type='button' and @role='combobox' and @aria-invalid='false'])[1]"
     @FindBy(xpath = "//button[@role='combobox']")
     private WebElement categoryDropdown;
 
@@ -521,10 +580,10 @@ private WebElement creatiCatButton;
     }
 
     public WebElement getCategoryDropdown() {
-       return categoryDropdown;
+        return categoryDropdown;
     }
 
-    @FindBy(xpath = "//span[text()='test']")
+    @FindBy(xpath = "//span[text()='Paste']")
     private WebElement optionDropdown;
 
     public void clickOptionDropdown() {
@@ -562,15 +621,15 @@ private WebElement creatiCatButton;
 
     public void selectTipProdusDrop() {
         tipProdus.click();
-        wait.until(ExpectedConditions.visibilityOf(alteleTypeProduct));
-        alteleTypeProduct.click();
+        wait.until(ExpectedConditions.visibilityOf(mancareTypeProduct));
+        mancareTypeProduct.click();
     }
 
-    @FindBy(xpath = "//span[text()='Altele']")
-    private WebElement alteleTypeProduct;
+    @FindBy(xpath = "//span[text()='Mâncare']")
+    private WebElement mancareTypeProduct;
 
-    public WebElement getAlteleTypeProduct() {
-        return alteleTypeProduct;
+    public WebElement getMancareTypeProduct() {
+        return mancareTypeProduct;
     }
 
     @FindBy(name = "price")
@@ -598,8 +657,20 @@ private WebElement creatiCatButton;
         return confirmationProduse;
     }
 
-    @FindBy(xpath = "//span[text()='Seturi modificatori']")
+    @FindBy(linkText = "Seturi modificatori")
     private WebElement seturiModificatoriIcon;
+
+    public void clickSeturiModificatoriIcon() {
+        try {
+            // Wait until the element is clickable
+            wait.until(ExpectedConditions.elementToBeClickable(seturiModificatoriIcon));
+            seturiModificatoriIcon.click();
+        } catch (Exception e) {
+            // Fallback to JavaScript click if the regular click fails
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", seturiModificatoriIcon);
+        }
+    }
 
     public WebElement getSeturiModificatoriIcon() {
         return seturiModificatoriIcon;
@@ -624,17 +695,113 @@ private WebElement creatiCatButton;
     }
 
     @FindBy(xpath = "//input[@placeholder='Selectati modificatorii']")
-    private WebElement selectatiModificatoriiField;
+    private WebElement modificatoriDropdown;
 
-    public WebElement getSelectatiModificatoriiField() {
-        return selectatiModificatoriiField;
+    public void clickModificatoriDropdown() {
+        modificatoriDropdown.click();
     }
 
-    @FindBy (css = ".text-xl.font-semibold.leading-none.tracking-tight")
+    public WebElement getModificatoriDropdown() {
+        return modificatoriDropdown;
+    }
+
+    @FindBy(xpath = "//div[@data-value='Paste Carbonara']")
+    private WebElement optDropdown;
+
+    public void clickOptDropdown() {
+        optionDropdown.click();
+    }
+
+    public WebElement getOptDropdown() {
+        return optionDropdown;
+    }
+
+    public void selectModificatoriDropdown() throws InterruptedException {
+        modificatoriDropdown.click();
+        Thread.sleep(3000);
+        wait.until(ExpectedConditions.visibilityOf(optDropdown));
+        Thread.sleep(3000);
+        optDropdown.click();
+        Thread.sleep(3000);
+    }
+
+    @FindBy(xpath = "//button[text()='Creați set nou']")
+    private WebElement creatiSetNouButton;
+
+    public WebElement getCreatiSetNouButton() {
+        return creatiSetNouButton;
+    }
+
+    @FindBy(xpath = "//h3[text()='Sosuri']")
+    private WebElement modificatorValidation;
+
+    public WebElement getModificatorValidation() {
+        return modificatorValidation;
+    }
+
+    @FindBy(xpath = "(//button[text()='Șterge'])[1]")
+    private WebElement stergeModificator;
+
+    public WebElement getStergeModificator() {
+        return stergeModificator;
+    }
+
+    @FindBy(xpath = "//button[text()='Continuați']")
+    private WebElement continuatiButton;
+
+    public WebElement getContinuatiButton() {
+        return continuatiButton;
+    }
+
+    @FindBy(css = ".text-xl.font-semibold.leading-none.tracking-tight")
     private WebElement confirmationLocation;
 
     public WebElement getConfirmationLocation() {
         return confirmationLocation;
+    }
+
+    @FindBy(xpath = "//h2[text()='Nu aveți seturi de modificatori încă']")
+    private WebElement deleteModifValidation;
+
+    public WebElement getDeleteModifValidation() {
+        return deleteModifValidation;
+    }
+
+    @FindBy(xpath = "//button[text()='Editează']")
+    private WebElement editSetModif;
+
+    public WebElement getEditSetModif() {
+        return editSetModif;
+    }
+
+    @FindBy(name = "name")
+    private WebElement numeSetModif;
+
+    public WebElement getNumeSetModif() {
+        return numeSetModif;
+    }
+
+    @FindBy(xpath = "//button[text()='Salvați']")
+    private WebElement SaveModif;
+
+    public WebElement getSaveModif() {
+        return SaveModif;
+    }
+
+    @FindBy(css = ".text-xl.font-semibold.leading-none.tracking-tight.p-4")
+    private WebElement editModifValidation;
+
+    public WebElement getEditModifValidation() {
+        return editModifValidation;
+    }
+
+    public void deleteAndEditNameSetModif(String name) {
+        wait.until(ExpectedConditions.elementToBeClickable(numeSetModif));
+        numeSetModif.click();
+        editNameCat.sendKeys(Keys.COMMAND + "a");
+        editNameCat.sendKeys(Keys.BACK_SPACE);
+        wait.until(ExpectedConditions.visibilityOf(numeSetModif));
+        editNameCat.sendKeys(name);
     }
 
     public void loginTest() {
@@ -667,7 +834,5 @@ private WebElement creatiCatButton;
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.sendKeys(text);
     }
-
-
 
 }
