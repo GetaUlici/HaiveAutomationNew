@@ -112,31 +112,6 @@ public class LoginPage extends BasePage {
         return errorPassword;
     }
 
-    @FindBy(css = ".relative.flex.shrink-0.overflow-hidden.rounded-full.size-8")
-    private WebElement avatarIcon;
-
-    public void clickAvatarIcon() {
-        avatarIcon.click();
-    }
-
-    public WebElement getAvatarIcon() {
-        return avatarIcon;
-    }
-
-    @FindBy(xpath = "//div[text()='Ieşi din cont']")
-    private WebElement iesiDinContButton;
-
-    public void clickIesiCont() {
-        iesiDinContButton.click();
-    }
-
-    @FindBy(xpath = "//p[text()='ulicigeta+1@gmail.com']")
-    private WebElement emailConfirmation;
-
-    public WebElement getEmailConfirmation() {
-        return emailConfirmation;
-    }
-
     @FindBy(xpath = "//div[text()='Ceva nu a mers bine']")
     private WebElement cevaNuAMersBine;
 

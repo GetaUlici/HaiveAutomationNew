@@ -29,6 +29,7 @@ public class LoginTest extends Hooks {
     // Declaring a public variable of type CheckoutPage named 'checkoutPage'.
     // This will be used to interact with the CheckoutPage object during the tests.
     public LoginPage loginPage;
+    public DashboardPage dashboardPage;
 
     // Declaring a public variable of type WebDriverWait named 'wait'.
     // WebDriverWait is used to explicitly wait for certain conditions or elements during test execution.
@@ -44,6 +45,7 @@ public class LoginTest extends Hooks {
         // Initializing the checkoutPage object with the current WebDriver instance.
         // This allows the test methods to interact with elements on the checkout page.
         loginPage = new LoginPage(driver);
+        dashboardPage = new DashboardPage(driver);
 
         // Initializing the WebDriverWait object with the current WebDriver instance and a timeout of 30 seconds.
         // This wait will be used to pause the execution until certain conditions are met or elements are found.
@@ -68,31 +70,31 @@ public class LoginTest extends Hooks {
     @Test(description = "Login with a user")
     public void loginTest() {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
-        Assert.assertEquals(loginPage.getDashboard().getText(), "Dashboard", "The user is not logged in, the dashboard page wasn't displayed.");
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
+        Assert.assertEquals(dashboardPage.getDashboard().getText(), "Dashboard", "The user is not logged in, the dashboard page wasn't displayed.");
         ExtentTestNGITestListener.getTest().log(Status.PASS, "The user is logged in, the Dashboard page is displayed");
     }
 
     @Test(description = "Logout with a user")
     public void logoutTest() {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
 
-        if (loginPage.getDashboard().getText().equals("Dashboard")) {
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
         } else {
             softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
         }
 
-        loginPage.clickWhenReady(loginPage.getAvatarIcon());
+        loginPage.clickWhenReady(dashboardPage.getAvatarIcon());
 
-        if (loginPage.getEmailConfirmation().getText().equals("ulicigeta+1@gmail.com")) {
+        if (dashboardPage.getEmailConfirmation().getText().equals("ulicigeta+1@gmail.com")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user can be validated with the corresponding email displayed.");
         } else {
             softAssert.fail("The user's email can't be validated, the corresponding email is not successfully displayed.");
         }
 
-        loginPage.clickIesiCont();
+        dashboardPage.clickIesiCont();
         wait.until(ExpectedConditions.visibilityOf(loginPage.getAutentificareText()));
         Assert.assertEquals(loginPage.getAutentificareText().getText(), "Autentificare");
         softAssert.assertAll();

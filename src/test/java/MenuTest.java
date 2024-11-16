@@ -25,6 +25,7 @@ public class MenuTest extends Hooks {
     // This will be used to interact with the CheckoutPage object during the tests.
     public LoginPage loginPage;
     public MenuPage menuPage;
+    public DashboardPage dashboardPage;
 
     // Declaring a public variable of type WebDriverWait named 'wait'.
     // WebDriverWait is used to explicitly wait for certain conditions or elements during test execution.
@@ -41,6 +42,7 @@ public class MenuTest extends Hooks {
         // This allows the test methods to interact with elements on the checkout page.
         loginPage = new LoginPage(driver);
         menuPage = new MenuPage(driver);
+        dashboardPage = new DashboardPage(driver);
 
         // Initializing the WebDriverWait object with the current WebDriver instance and a timeout of 30 seconds.
         // This wait will be used to pause the execution until certain conditions are met or elements are found.
@@ -52,9 +54,9 @@ public class MenuTest extends Hooks {
     @Test(description = "Creating menu")
     public void createMenuTest() throws InterruptedException {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
 
-        if (loginPage.getDashboard().getText().equals("Dashboard")) {
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
         } else {
             softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
@@ -76,9 +78,9 @@ public class MenuTest extends Hooks {
     @Test(description = "Adding a category to the menu")
     public void addingCategoryToMenuTest() throws InterruptedException {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
 
-        if (loginPage.getDashboard().getText().equals("Dashboard")) {
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
         } else {
             softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
@@ -101,9 +103,9 @@ public class MenuTest extends Hooks {
     @Test(description = "Editing Category of the menu")
     public void editCatTest() throws InterruptedException {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
 
-        if (loginPage.getDashboard().getText().equals("Dashboard")) {
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
         } else {
             softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
@@ -127,9 +129,9 @@ public class MenuTest extends Hooks {
     @Test(description = "Removing a category from menu")
     public void removingCatFromMenu() throws InterruptedException {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
 
-        if (loginPage.getDashboard().getText().equals("Dashboard")) {
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
         } else {
             softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");

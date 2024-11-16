@@ -25,6 +25,7 @@ public class LocationTest extends Hooks {
     // This will be used to interact with the CheckoutPage object during the tests.
     public LoginPage loginPage;
     public LocationPage locationPage;
+    public DashboardPage dashboardPage;
 
     // Declaring a public variable of type WebDriverWait named 'wait'.
     // WebDriverWait is used to explicitly wait for certain conditions or elements during test execution.
@@ -41,6 +42,7 @@ public class LocationTest extends Hooks {
         // This allows the test methods to interact with elements on the checkout page.
         loginPage = new LoginPage(driver);
         locationPage = new LocationPage(driver);
+        dashboardPage = new DashboardPage(driver);
 
         // Initializing the WebDriverWait object with the current WebDriver instance and a timeout of 30 seconds.
         // This wait will be used to pause the execution until certain conditions are met or elements are found.
@@ -51,9 +53,9 @@ public class LocationTest extends Hooks {
     @Test(description = "Creating a new location")
     public void locationTest() throws InterruptedException {
         loginPage.loginTest();
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getDashboard()));
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
 
-        if (loginPage.getDashboard().getText().equals("Dashboard")) {
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
             ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
         } else {
             softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
