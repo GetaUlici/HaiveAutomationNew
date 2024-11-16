@@ -1,0 +1,48 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TestSuite">
+    <test name="TestOrder">
+        <classes>
+            <class name="LoginTest">
+                <methods>
+                    <!--                    <include name="authenticatingTest"/>-->
+                    <include name="loginTest"/>
+                    <include name="logoutTest"/>
+                    <include name="negativeLoginTest"/>
+                    <include name="invalidEmailTest"/>
+                    <include name="invalidPasswordTest"/>
+                </methods>
+            </class>
+            <class name="DashboardTest">
+                <methods>
+                    <include name="pickDashboardDateTest"/>
+                    <include name="deleteDashboardDateTest"/>
+                </methods>
+            </class>
+            <class name="LocationTest">
+                <methods>
+                    <include name="locationTest"/>
+                </methods>
+            </class>
+            <class name="MenuTest">
+                <methods>
+                    <include name="createMenuTest"/>
+                    <include name="addingCategoryToMenuTest"/>
+                    <include name="editCatTest"/>
+                    <!--                    <include name="removingCatFromMenu"/>-->
+                </methods>
+            </class>
+            <class name="ProductsTest">
+                <methods>
+                    <include name="creatingProductsTest"/>
+                </methods>
+            </class>
+            <class name="ModifierSetTest">
+                <methods>
+                    <include name="createSetModificatoriTest"/>
+                    <include name="editSetModificatoriTest"/>
+                    <include name="deleteModificatoriTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
