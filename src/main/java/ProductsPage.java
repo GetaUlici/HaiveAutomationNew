@@ -99,6 +99,10 @@ public class ProductsPage extends BasePage {
         nameProduct.sendKeys(name);
     }
 
+    public void clickNameProduct() {
+        nameProduct.click();
+    }
+
     public WebElement getNameProduct() {
         return nameProduct;
     }
@@ -172,6 +176,27 @@ public class ProductsPage extends BasePage {
         return confirmationProduse;
     }
 
+    @FindBy(xpath = "//h3[text()='Paste Carbonara']")
+    private WebElement pasteCarbonaraProduct;
+
+    public WebElement getPasteCarbonaraProduct() {
+        return pasteCarbonaraProduct;
+    }
+
+    @FindBy(xpath = "//button[text()='Actualizați produsul']")
+    private WebElement actualizatiProdusul;
+
+    public WebElement getActualizatiProdusul() {
+        return actualizatiProdusul;
+    }
+
+    @FindBy(xpath = "//div[text()='Operația a fost efectuată cu succes']")
+    private WebElement validationActualizare;
+
+    public WebElement getValidationActualizare() {
+        return validationActualizare;
+    }
+
     public void selectOption(WebElement element, String option) {
         Select optionSelect = new Select(element);
         optionSelect.selectByVisibleText(option);
@@ -185,5 +210,13 @@ public class ProductsPage extends BasePage {
     public void sendKeysWhenReady(WebElement locator, String text) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.sendKeys(text);
+    }
+    public void deleteAndEditProductName(String name) {
+        wait.until(ExpectedConditions.elementToBeClickable(nameProduct));
+        nameProduct.click();
+        nameProduct.sendKeys(Keys.COMMAND + "a");
+        nameProduct.sendKeys(Keys.BACK_SPACE);
+        wait.until(ExpectedConditions.visibilityOf(nameProduct));
+        nameProduct.sendKeys(name);
     }
 }

@@ -50,7 +50,7 @@ public class ProductsTest extends Hooks {
         softAssert = new SoftAssert();
     }
 
-    @Test(description = "Creating products")
+    @Test(description = "Creating products test")
     public void creatingProductsTest() throws InterruptedException {
         loginPage.loginTest();
         wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
@@ -78,6 +78,35 @@ public class ProductsTest extends Hooks {
         wait.until(ExpectedConditions.visibilityOf(productsPage.getConfirmationProduse()));
         Assert.assertEquals(productsPage.getConfirmationProduse().getText(), "Produse", "Produse page is not displayed.");
         ExtentTestNGITestListener.getTest().log(Status.PASS, "The product has been created and it's displayed on the products page.");
+        softAssert.assertAll();
+    }
+
+    @Test(description = "Editing products test")
+    public void editingProductsTest() throws InterruptedException {
+        loginPage.loginTest();
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
+
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
+            ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
+        } else {
+            softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
+        }
+
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getProduseIcon()));
+        wait.until(ExpectedConditions.elementToBeClickable(productsPage.getProduseIcon()));
+        productsPage.clickProduseIcon();
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getPasteCarbonaraProduct()));
+        productsPage.clickWhenReady(productsPage.getPasteCarbonaraProduct());
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getNameProduct()));
+        productsPage.deleteAndEditProductName("Paste bologneze");
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(603, 1463);");
+        Thread.sleep(1000);
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getActualizatiProdusul()));
+        wait.until(ExpectedConditions.elementToBeClickable(productsPage.getActualizatiProdusul()));
+        productsPage.clickWhenReady(productsPage.getActualizatiProdusul());
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getValidationActualizare()));
+        Assert.assertEquals(productsPage.getValidationActualizare().getText(), "Operația a fost efectuată cu succes", "The product wasn't updated successfully.");
+        ExtentTestNGITestListener.getTest().log(Status.PASS, "The product was updated successfully.");
         softAssert.assertAll();
     }
 }
