@@ -183,6 +183,13 @@ public class ProductsPage extends BasePage {
         return pasteCarbonaraProduct;
     }
 
+    @FindBy(xpath = "//h3[text()='Paste bologneze']")
+    private WebElement pasteBolognezeProduct;
+
+    public WebElement getPasteBolognezeProduct() {
+        return pasteBolognezeProduct;
+    }
+
     @FindBy(xpath = "//button[text()='Actualizați produsul']")
     private WebElement actualizatiProdusul;
 
@@ -190,11 +197,31 @@ public class ProductsPage extends BasePage {
         return actualizatiProdusul;
     }
 
+    @FindBy(xpath = "//button[text()='Ștergeți produsul']")
+    private WebElement stergetiProdusul;
+
+    public WebElement getStergetiProdusul() {
+        return stergetiProdusul;
+    }
+
+    @FindBy(xpath = "//button[text()='Continuă']")
+    private WebElement continuaButton;
+
+    public WebElement getContinuaButton() {
+        return continuaButton;
+    }
+
     @FindBy(xpath = "//div[text()='Operația a fost efectuată cu succes']")
     private WebElement validationActualizare;
 
     public WebElement getValidationActualizare() {
         return validationActualizare;
+    }
+    @FindBy(xpath = "//div[text()='Operația a fost efectuată cu succes']")
+    private WebElement validationDelete;
+
+    public WebElement getValidationDelete() {
+        return validationDelete;
     }
 
     public void selectOption(WebElement element, String option) {

@@ -105,8 +105,61 @@ public class ProductsTest extends Hooks {
         wait.until(ExpectedConditions.elementToBeClickable(productsPage.getActualizatiProdusul()));
         productsPage.clickWhenReady(productsPage.getActualizatiProdusul());
         wait.until(ExpectedConditions.visibilityOf(productsPage.getValidationActualizare()));
-        Assert.assertEquals(productsPage.getValidationActualizare().getText(), "Operația a fost efectuată cu succes", "The product wasn't updated successfully.");
-        ExtentTestNGITestListener.getTest().log(Status.PASS, "The product was updated successfully.");
+
+        if (productsPage.getValidationActualizare().getText().equals("Operația a fost efectuată cu succes")) {
+            ExtentTestNGITestListener.getTest().log(Status.PASS, "The product was successfully edited.");
+        } else {
+            softAssert.fail("The product wasn't edited, something occurred.");
+        }
+
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getPasteBolognezeProduct()));
+        wait.until(ExpectedConditions.elementToBeClickable(productsPage.getPasteBolognezeProduct()));
+        Assert.assertEquals(productsPage.getPasteBolognezeProduct().getText(), "Paste bologneze", "The product wasn't updated successfully.");
+        ExtentTestNGITestListener.getTest().log(Status.PASS, "The product was updated successfully and " + productsPage.getPasteBolognezeProduct().getText() + " is displayed.");
+        softAssert.assertAll();
+    }
+
+    @Test(description = "Deleting products test")
+    public void deletingProductsTest() throws InterruptedException {
+        loginPage.loginTest();
+        wait.until(ExpectedConditions.visibilityOf(dashboardPage.getDashboard()));
+
+        if (dashboardPage.getDashboard().getText().equals("Dashboard")) {
+            ExtentTestNGITestListener.getTest().log(Status.PASS, "The user was successfully logged in, the Dashboard is displayed.");
+        } else {
+            softAssert.fail("The user has not successfully log in and the Dashboard is not displayed.");
+        }
+
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getProduseIcon()));
+        wait.until(ExpectedConditions.elementToBeClickable(productsPage.getProduseIcon()));
+        productsPage.clickProduseIcon();
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getPasteBolognezeProduct()));
+        productsPage.clickWhenReady(productsPage.getPasteBolognezeProduct());
+        Thread.sleep(3000);
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(516, 1571);");
+        Thread.sleep(1000);
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getStergetiProdusul()));
+        wait.until(ExpectedConditions.elementToBeClickable(productsPage.getStergetiProdusul()));
+        productsPage.clickWhenReady(productsPage.getStergetiProdusul());
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getContinuaButton()));
+        productsPage.clickWhenReady(productsPage.getContinuaButton());
+        wait.until(ExpectedConditions.visibilityOf(productsPage.getValidationDelete()));
+
+        if (productsPage.getValidationDelete().getText().equals("Operația a fost efectuată cu succes")) {
+            ExtentTestNGITestListener.getTest().log(Status.PASS, "The product was successfully deleted.");
+        } else {
+            softAssert.fail("The product wasn't deleted, something occurred.");
+        }
+
+        try {
+            if (productsPage.getPasteBolognezeProduct().isDisplayed()) {
+                Assert.fail("The product is still displayed after the user deleted the product.");
+            }
+        } catch (NoSuchElementException e) {
+            ExtentTestNGITestListener.getTest().log(Status.PASS, "The user successfully deleted the product.");
+            Assert.assertTrue(true, "The product was successfully deleted.");
+        }
+
         softAssert.assertAll();
     }
 }
